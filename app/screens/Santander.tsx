@@ -1,133 +1,147 @@
 import React, { version } from "react";
-import { Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ViewBase, ViewComponent } from "react-native";
-
+import {  SafeAreaView,  StyleSheet, Text,  TouchableOpacity, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
 export default function Santander(){
     return(
-        <SafeAreaView style={estilos.container}>
-            <View style={estilos.header}>
-                <Text style={estilos.sectionTitle}>Cuentas en pesos</Text>
-                <View style={estilos.accountContainer}>
-                    <Text style={estilos.accountType}>Débito líkeu</Text>
-                    <Text style={estilos.availableBalance}>Dinero disponible en MXN</Text>
-                    <Text style={estilos.balance}>$ 3.16</Text>
-                    <Text style={estilos.accountNumber}>CTA 25**2068</Text>
-                </View>
-            </View>
-            <View style={estilos.divider}/>
-            <Text style={estilos.cardHint}>Toca la tarjeta para ver su información</Text>
-            <View style={estilos.actionsContainer}>
-                <TouchableOpacity style={estilos.actionItem}>
-                    <Text>Prender o apagar tarjeta</Text>
-                    <Text style={estilos.icon}>+</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={estilos.actionItem}>
-                    <Text>Movimientos</Text>
-                    <Text style={estilos.icon}></Text>
-                </TouchableOpacity>
-                {['Realizar transferencia', 'Realizar pago', 'Realizar retiro sin tarjeta'].map((action) => (
-                    <TouchableOpacity key={action} style={estilos.actionItem}>
-                    <Text>{action}</Text>
-                <Text style={estilos.icon}>+</Text>
-                </TouchableOpacity>
-                ))}
-            </View>
-            <View style={estilos.additionalOptions}>
-                {[
-                    { label: 'Generación de NIP', status: 'Nuevo' },
-                    { label: 'Billeteras digitales', status: 'Nuevo' },
-                    { label: 'Bloqueos selectivos', status: '>' },
-                    { label: 'Bloqueo total y reposición', status: '>' },
-                    { label: 'Aclaraciones', status: '+' },
-                    { label: 'Mis finanzas', status: '>' },
-                ].map((item) => (
-                    <TouchableOpacity key={item.label} style={estilos.optionItem}>
-                        <Text>{item.label}</Text>
-                        <Text style={estilos.status}>{item.status}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
-        </SafeAreaView>
+      <SafeAreaView style={styles.container}>
+      {/* Sección de la tarjeta */}
+        <View style={styles.Header}>
+          <Text style={styles.cardTitle}>Cuentas en pesos</Text>
+        </View>
+      <TouchableOpacity style={styles.cardContainer}>        
+        <View style={styles.cardContent}>
+          <Text style={styles.cardSubtitle}>Debito líkeu</Text>
+          <Text style={styles.cardDescription}>Dinero disponible en MXN</Text>
+          
+          <View style={styles.amountContainer}>
+            <Text style={styles.amount}>$ 3.16</Text>
+            <Text style={styles.accountNumber}>CTA 25**2068</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
+      {/* Lista de opciones */}
+      <View style={styles.menuContainer}>
+        {[
+          ['Prender o apagar tarjeta', '+'],
+          ['Movimientos', '>'],
+          ['Realizar transferencia', '+'],
+          ['Realizar pago', '+'],
+          ['Realizar retiro sin tarjeta', '+'],
+        ].map(([title, icon], index) => (
+          <TouchableOpacity key={index} style={styles.menuItem}>
+            <Text style={styles.menuText}>{title}</Text>
+            <Text style={styles.menuIcon}>{icon}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Lista de opciones inferiores */}
+      <View style={styles.menuContainer}>
+        {[
+          ['Generación de NIP', 'Nuevo'],
+          ['Billeteras digitales', 'Nuevo'],
+          ['Bloqueos selectivos', '>'],
+          ['Bloqueo total y reposición', '>'],
+          ['Aclaraciones', '+'],
+          ['Mis finanzas', '>'],
+        ].map(([title, icon], index) => (
+          <TouchableOpacity key={index} style={styles.menuItem}>
+            <Text style={styles.menuText}>{title}</Text>
+            <Text style={[styles.menuIcon, icon === 'Nuevo' && styles.newBadge]}>
+              {icon}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </SafeAreaView>
     );
 }
 
-const estilos = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
-        padding: 16,
+      flex: 1,
+      backgroundColor: '#fff',
+      padding: 16,
     },
-    accountContainer:{
-        backgroundColor:'red',
-        borderRadius:15,
-        padding:16,
-        alignItems:'center',
-        marginVertical:20,
-        marginHorizontal:20,
+    Header:{
+      fontSize:18,
+      fontWeight:'bold',
+      marginBottom:8,
     },
-    header:{
-        marginBottom: 16,
-        color:'red',
+    cardContainer: {
+      backgroundColor: '#E60012',
+      borderRadius: 8,
+      padding: 16,
+      marginBottom: 24,
+      shadowColor: '#fff',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 2,            
+      marginVertical:20,
+      marginHorizontal:60,
     },
-    sectionTitle: {
-        fontSize:18,
-        fontWeight:'bold',
-        marginBottom:8,
+    cardHeader: {
+      borderBottomWidth: 1,
+      borderBottomColor: '#fff',
+      paddingBottom: 8,
+      marginBottom: 12,
     },
-    accountType:{
-        fontSize:16,
-        marginBottom: 4,
+    cardTitle: {
+      fontSize: 16,
+      fontWeight: 'bold',
     },
-    balance: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginVertical: 8,
+    cardContent: {
+      marginBottom: 8,
+    },
+    cardSubtitle: {
+      fontSize: 14,
+      fontWeight: '500',
+      marginBottom: 4,
+      color:'#fff',
+    },
+    cardDescription: {
+      fontSize: 12,
+      color: '#fff',
+      marginBottom: 12,
+    },
+    amountContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    amount: {
+      fontSize: 24,
+      color:'#fff',
+      fontWeight: 'bold',
     },
     accountNumber: {
-        fontSize: 16,
-        color: 'black',
+      fontSize: 14,
+      color: '#fff',
     },
-    availableBalance: {
-        fontSize: 14,
-        color: 'black',
+    menuContainer: {
+      marginBottom: 24,
+      borderTopWidth: 1,
+      borderTopColor: '#e0e0e0',
     },
-    divider:{
-        borderTopWidth:1,
-        borderColor:'#e0e0e0',
-        marginVertical:16,
+    menuItem: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: '#e0e0e0',
     },
-    cardHint: {
-        color: 'gray',
-        marginBottom: 16,
+    menuText: {
+      fontSize: 16,
     },
-    actionsContainer: {
-        marginBottom: 24,
+    menuIcon: {
+      fontSize: 16,
+      color: '#666',
     },
-    actionItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderColor: '#e0e0e0',
+    newBadge: {
+      color: '#007AFF',
+      fontWeight: 'bold',
     },
-    icon: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    additionalOptions: {
-        borderTopWidth: 1,
-        borderColor: '#e0e0e0',
-    },
-    optionItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderColor: '#e0e0e0',
-    },
-    status: {
-        color: 'green',
-        fontWeight: 'bold',
-    },
-})
+  });
